@@ -52,8 +52,8 @@ def get_int():
 
     return valor
 
-# Ejercicio 6
 
+# Ejercicio 6
 class Persona:
     ADULTEZ = 18
 
@@ -105,8 +105,53 @@ class Persona:
         return self.mostrar()
 
 
-p1 = Persona("Carlos Lopez", 25, 1234)
+class Cuenta:
+    def __init__(self, titular, cantidad=0.0):
+        self.__titular = titular
+        self.__cantidad = cantidad
 
+    @property
+    def titular(self):
+        return self.__titular
+
+    @property
+    def cantidad(self):
+        return self.__cantidad
+    
+    def mostrar(self):
+        return f"Titular: {self.__titular.nombre} cantidad: {self.__cantidad}"
+    
+    def ingresar(self, monto):
+        if monto <= 0:
+            raise(ValueError, "El monto no puede ser 0 o menos")
+
+        self.__cantidad += monto
+
+    def retirar(self, monto):
+        self.__cantidad -= monto
+
+
+class CuentaJoven(Cuenta):
+    def __init__(self, titular,  bonificacion, cantidad=0):
+        super().__init__(titular, cantidad)
+
+        self.__bonificacion = bonificacion
+        
+    @property
+    def bonificacion(self):
+        return self.__bonificacion
+    
+    def es_titular_valido(self):
+        return self.titular.es_mayor_de_edad() and self.titular.edad < 25
+    
+    def retirar(self, monto):
+        if not self.es_titular_valido():
+            raise ValueError("Solo pueden retirar dinero titulares validos")
+
+        return super().retirar(monto)
+    
+    def mostrar(self):
+        return f"- Cuenta Joven - titular: {self.titular.nombre} - bonificacion: {self.__bonificacion}"
 
 #---------------------------------------------------------
 
@@ -138,10 +183,42 @@ assert max_frecuencia("c b a") == ('c', 1), "Error"
 # get_int()
 
 # Ejercicio 6
+p1 = Persona("Carlos Lopez", 25, 1234)
+assert p1.nombre == "Carlos Lopez", "Error"
+assert p1.edad == 25, "Error"
+assert p1.DNI == 1234, "Error"
+assert p1.mostrar() == "Carlos Lopez 25 DNI: 1234", "Error"
+assert p1.es_mayor_de_edad(), "Error"
 
 # Ejercicio 7
+p2 = Persona("Maria Del Cerro", 30, 4321)
+c1 = Cuenta(p2)
+
+assert c1.titular.nombre == "Maria Del Cerro", "Error"
+assert c1.cantidad == 0.0, "Error"
+
+c1.ingresar(1000.0)
+assert c1.cantidad == 1000.0, "Error"
+
+c1.retirar(750.0)
+assert c1.cantidad == 250.0, "Error"
+
+assert c1.mostrar() == "Titular: Maria Del Cerro cantidad: 250.0", "Error"
 
 # Ejercicio 8
+p3 = Persona("Gaston Gomez", 23, 9119)
+cj1 = CuentaJoven(p3, .25, 1000.0)
 
+cj1.retirar(500)
+assert cj1.cantidad == 500.0, "Error"
+
+p4 = Persona("Florencia Ramirez", 35, 1991)
+cj2 = CuentaJoven(p4, .15, 1500.0)
+
+try:
+    cj2.retirar(500)
+
+except ValueError as ve:
+    assert str(ve) == "Solo pueden retirar dinero titulares validos"
 
 print("Todos los test OK")
