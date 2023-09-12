@@ -1,17 +1,26 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from datetime import datetime
 
 def index(request):
     return render(request, "index.html")
 
 def alumnos_listado(request):
-    return HttpResponse("""
-    <ul>
-        <li>Pepe Gonzalez</li>
-        <li>Maria Del Carril</li>
-        <li>Gaston Gomez</li>
-    </ul>
-    """)
+
+    # Esta data en el futuro vendrá de la base de datos
+    listado = [
+    ]
+
+    context = {
+        'nombre_usuario': 'Carlos Perez',
+        'fecha': datetime.now(),
+        'es_instructor': False,
+        'listado_alumnos': listado,
+        'cant_inscriptos': len(listado),
+    }
+
+    return render(request, 'alumnos_listado.html', context)
+
 
 def alumno_detalle(request, nombre_alumno):
     return HttpResponse(
