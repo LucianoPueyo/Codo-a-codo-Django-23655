@@ -3,12 +3,19 @@ from django.http import HttpResponse
 from datetime import datetime
 
 def index(request):
-    return render(request, "index.html")
+    context = {
+        'nombre_usuario': 'Carlos Perez',
+        'fecha': datetime.now(),
+        'es_instructor': True,
+    }
+    return render(request, "core/index.html", context)
 
 def alumnos_listado(request):
 
     # Esta data en el futuro vendrá de la base de datos
     listado = [
+        'Carlos Lopez',
+        'Maria Del Cerro',
     ]
 
     context = {
@@ -19,8 +26,7 @@ def alumnos_listado(request):
         'cant_inscriptos': len(listado),
     }
 
-    return render(request, 'alumnos_listado.html', context)
-
+    return render(request, 'core/alumnos_listado.html', context)
 
 def alumno_detalle(request, nombre_alumno):
     return HttpResponse(

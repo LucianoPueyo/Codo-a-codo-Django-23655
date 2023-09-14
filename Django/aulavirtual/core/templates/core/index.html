@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/index.css' %}">
+{%endblock%}
+
+{% block title %}Pagina de bienvenida{% endblock %}
+{% block section_title %}{% endblock %}
+{% block content %}
+    <h2>Bienvenid@ al aula virutal 2.0</h2>
+    <p>Usuario logueado como: <b>{{ nombre_usuario }}</b></p>
+    {% if es_instructor %}
+        <p style="color:red">Rol: Instructor</p>
+    {% else %}
+        <p style="color:green">Rol: Alumno</p>
+    {% endif %}
+
+    {% filter lower %}
+    <p>Día de la fecha: {{ fecha }}</p>
+    {% endfilter %}
+{% endblock %}

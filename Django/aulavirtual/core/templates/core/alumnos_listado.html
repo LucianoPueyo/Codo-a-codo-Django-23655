@@ -1,0 +1,26 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/alumnos_listado.css' %}">
+{%endblock%}
+
+{% block title %}Listado Alumnos{% endblock %}
+{% block section_title %}Listado Alumnos{% endblock %}
+{% block content %}
+    <h2>2023</h2>
+    <ul>
+        {% for nombre_alumno in listado_alumnos %}
+            <li>
+                <p>{{ nombre_alumno | title }}</p>
+            </li>
+        {% empty %}
+            <p>Sin alumnos inscriptos</p>
+        {% endfor %}
+    </ul>
+
+    {% if cant_inscriptos > 0 %}
+        <p>cantidad de inscriptos: {{cant_inscriptos}}</p>
+    {% else %}
+        <p>No hay inscriptos</p>
+    {% endif %}
+{% endblock %}
