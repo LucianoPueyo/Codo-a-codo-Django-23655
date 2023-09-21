@@ -1,0 +1,18 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/contacto.css' %}">
+{%endblock%}
+
+{% block title %}Envianos tus comentarios{% endblock %}
+{% block section_title %}Completá el siguiente formulario{% endblock %}
+{% block content %}
+
+    <form method="post" action="{% url 'contacto' %}">
+        {% csrf_token %}
+        {{ contacto_form.as_p }}
+        <input type="submit">
+    </form>
+
+{% endblock %}

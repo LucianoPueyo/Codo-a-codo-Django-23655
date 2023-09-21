@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import datetime
+from .forms import ContactoForm 
 
 def index(request):
     context = {
@@ -9,6 +10,18 @@ def index(request):
         'es_instructor': True,
     }
     return render(request, "core/index.html", context)
+
+def contacto(request):
+
+    print(request.POST)
+
+    formulario = ContactoForm()
+
+    context = {
+        'contacto_form': formulario
+    }
+
+    return render(request, "core/contacto.html", context)
 
 def alumnos_listado(request):
 
