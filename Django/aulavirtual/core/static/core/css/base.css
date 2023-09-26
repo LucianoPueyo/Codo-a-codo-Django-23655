@@ -5,3 +5,8 @@ header {
 footer {
     background-color: gray;
 }
+
+.messages {
+    border: 3px solid black;
+    padding: 25px;
+}

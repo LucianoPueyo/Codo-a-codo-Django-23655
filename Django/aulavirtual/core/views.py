@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.http import HttpResponse
+from django.urls import reverse
 from datetime import datetime
 from .forms import ContactoForm 
 
@@ -12,10 +14,19 @@ def index(request):
     return render(request, "core/index.html", context)
 
 def contacto(request):
+    if request.method == "POST":
+        # Instanciamos un formulario con datos
+        formulario = ContactoForm(request.POST)
 
-    print(request.POST)
+        # Validarlo
+        if formulario.is_valid():
+            # Dar de alta la info
 
-    formulario = ContactoForm()
+            messages.info(request, "Consulta enviada con éxito")
+            return redirect(reverse("alumnos_listado"))
+
+    else: # GET
+        formulario = ContactoForm()
 
     context = {
         'contacto_form': formulario
