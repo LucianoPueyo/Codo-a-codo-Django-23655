@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
 from .forms import ContactoForm 
-
+from .models import Persona
 def index(request):
     context = {
         'nombre_usuario': 'Carlos Perez',
@@ -23,6 +23,10 @@ def contacto(request):
             # Dar de alta la info
 
             messages.info(request, "Consulta enviada con éxito")
+
+            p1 = Persona(nombre="Carlos",apellido="Lopez")
+            p1.save()
+
             return redirect(reverse("alumnos_listado"))
 
     else: # GET
@@ -37,10 +41,15 @@ def contacto(request):
 def alumnos_listado(request):
 
     # Esta data en el futuro vendrá de la base de datos
-    listado = [
-        'Carlos Lopez',
-        'Maria Del Cerro',
-    ]
+
+    listado = Persona.objects.all()
+
+
+
+    # listado = [
+    #     'Carlos Lopez',
+    #     'Maria Del Cerro',
+    # ]
 
     context = {
         'nombre_usuario': 'Carlos Perez',

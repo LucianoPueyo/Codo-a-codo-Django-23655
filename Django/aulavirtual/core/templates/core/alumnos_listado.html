@@ -11,7 +11,7 @@
     <ul>
         {% for nombre_alumno in listado_alumnos %}
             <li>
-                <p>{{ nombre_alumno | title }}</p>
+                <p>{{ nombre_alumno.nombre | title }} {{ nombre_alumno.apellido | title }}</p>
             </li>
         {% empty %}
             <p>Sin alumnos inscriptos</p>
