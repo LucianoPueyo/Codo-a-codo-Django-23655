@@ -24,7 +24,11 @@ def contacto(request):
 
             messages.info(request, "Consulta enviada con éxito")
 
-            p1 = Persona(nombre="Carlos",apellido="Lopez")
+            p1 = Persona(
+                nombre=formulario.cleaned_data['nombre'],
+                apellido=formulario.cleaned_data['apellido'],
+                email=formulario.cleaned_data['mail'],
+                dni=formulario.cleaned_data['dni'])
             p1.save()
 
             return redirect(reverse("alumnos_listado"))

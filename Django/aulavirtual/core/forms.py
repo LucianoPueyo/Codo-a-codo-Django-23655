@@ -11,6 +11,7 @@ class ContactoForm(forms.Form):
     nombre = forms.CharField(label="Nombre de contacto", widget=BlueBackgroundTextInput, required=True)
     apellido =forms.CharField(label="Apellido de contacto", widget=forms.TextInput(attrs={'class': 'fondo_rojo'}), required=True)
     edad = forms.IntegerField(label="Edad")
+    dni = forms.IntegerField(label="DNI")
     mail = forms.EmailField(label="Mail", required=True)
     mensaje =  forms.CharField(widget=forms.Textarea)
 
