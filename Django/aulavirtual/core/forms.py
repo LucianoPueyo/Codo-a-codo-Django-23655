@@ -29,3 +29,11 @@ class ContactoForm(forms.Form):
         # Si el usuario no existe lo damos de alta
 
         return self.cleaned_data
+    
+
+class AltaAlumnoForm(forms.Form):
+    nombre = forms.CharField(label="Nombre del alumn@", required=True)
+    apellido =forms.CharField(label="Apellido del alumn@", required=True)
+    dni = forms.IntegerField(label="DNI", required=True)
+    email = forms.EmailField(label="email", required=True)
+    legajo = forms.CharField(label="Legajo", required=True)

@@ -3,8 +3,10 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
-from .forms import ContactoForm 
-from .models import Persona
+from .forms import ContactoForm, AltaAlumnoForm
+from .models import Estudiante
+
+
 def index(request):
     context = {
         'nombre_usuario': 'Carlos Perez',
@@ -24,12 +26,13 @@ def contacto(request):
 
             messages.info(request, "Consulta enviada con éxito")
 
-            p1 = Persona(
-                nombre=formulario.cleaned_data['nombre'],
-                apellido=formulario.cleaned_data['apellido'],
-                email=formulario.cleaned_data['mail'],
-                dni=formulario.cleaned_data['dni'])
-            p1.save()
+
+            # p1 = Estudiante(
+            #     nombre=formulario.cleaned_data['nombre'],
+            #     apellido=formulario.cleaned_data['apellido'],
+            #     email=formulario.cleaned_data['mail'],
+            #     dni=formulario.cleaned_data['dni'])
+            # p1.save()
 
             return redirect(reverse("alumnos_listado"))
 
@@ -42,19 +45,34 @@ def contacto(request):
 
     return render(request, "core/contacto.html", context)
 
+def alta_alumno(request):
+    context = {}
+
+    if request.method == "POST":
+        alta_alumno_form = AltaAlumnoForm(request.POST)
+
+        if alta_alumno_form.is_valid():
+            nuevo_alumno = Estudiante(
+                nombre = alta_alumno_form.cleaned_data['nombre'],
+                apellido = alta_alumno_form.cleaned_data['apellido'],
+                email = alta_alumno_form.cleaned_data['email'],
+                dni = alta_alumno_form.cleaned_data['dni'],
+                legajo = alta_alumno_form.cleaned_data['legajo'],
+            )
+
+            nuevo_alumno.save()
+
+            messages.info(request, "Alumno dado de alta correctamente")
+            return redirect(reverse("alumnos_listado"))
+    else:
+        alta_alumno_form = AltaAlumnoForm()
+
+    context['alta_alumno_form'] = AltaAlumnoForm
+
+    return render(request, 'core/alta_alumno.html', context)
+
 def alumnos_listado(request):
-
-    # Esta data en el futuro vendrá de la base de datos
-
-    listado = Persona.objects.all()
-
-
-
-    # listado = [
-    #     'Carlos Lopez',
-    #     'Maria Del Cerro',
-    # ]
-
+    listado = Estudiante.objects.all().order_by('dni')
     context = {
         'nombre_usuario': 'Carlos Perez',
         'fecha': datetime.now(),

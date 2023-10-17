@@ -11,7 +11,10 @@
     <ul>
         {% for nombre_alumno in listado_alumnos %}
             <li>
-                <p>{{ nombre_alumno.nombre | title }} {{ nombre_alumno.apellido | title }}</p>
+                <p>{{ nombre_alumno.nombre_completo | title }}</p>
+                <p>{{ nombre_alumno.email}}</p>
+                <p>{{ nombre_alumno.dni}}</p>
+                <p>{{ nombre_alumno.legajo}}</p>
             </li>
         {% empty %}
             <p>Sin alumnos inscriptos</p>
