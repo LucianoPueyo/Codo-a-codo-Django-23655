@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/docentes_listado.css' %}">
+{%endblock%}
+
+{% block title %}Listado Docentes{% endblock %}
+{% block section_title %}Listado Docentes{% endblock %}
+{% block content %}
+    <h2>2023</h2>
+    <ul>
+        {% for nombre_docente in listado_docentes %}
+            <li>
+                <p>{{ nombre_docente.nombre_completo | title }}</p>
+                <p>{{ nombre_docente.email}}</p>
+                <p>{{ nombre_docente.dni}}</p>
+                <p>{{ nombre_docente.cuit}}</p>
+            </li>
+        {% empty %}
+            <p>Sin docentes registrados</p>
+        {% endfor %}
+    </ul>
+
+    {% if listado_docentes.count > 0 %}
+        <p>cantidad de docentes registrados: {{listado_docentes.count}}</p>
+    {% else %}
+        <p>No hay docentes registrados</p>
+    {% endif %}
+{% endblock %}

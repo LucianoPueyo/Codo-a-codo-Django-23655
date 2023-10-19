@@ -3,9 +3,11 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
-from .forms import ContactoForm, AltaAlumnoForm
-from .models import Estudiante
-
+from .forms import ContactoForm, AltaAlumnoForm, AltaDocenteModelForm
+from .models import Estudiante, Docente
+from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
+from django.db import IntegrityError
 
 def index(request):
     context = {
@@ -60,7 +62,12 @@ def alta_alumno(request):
                 legajo = alta_alumno_form.cleaned_data['legajo'],
             )
 
-            nuevo_alumno.save()
+            try:
+                nuevo_alumno.save()
+
+            except IntegrityError as ie:
+                messages.error(request, "Ocurrió un error al intentar dar de alta al alumno")
+                return redirect(reverse("index"))
 
             messages.info(request, "Alumno dado de alta correctamente")
             return redirect(reverse("alumnos_listado"))
@@ -99,3 +106,18 @@ def alumnos_historico_2017(request):
 
 def alumnos_estado(request, estado):
     return HttpResponse(f'Filtrar alumnos por estado: {estado}')
+
+class DocenteCreateView(CreateView):
+    model = Docente
+    #context_object_name = 'alta_docente_form'
+    template_name = 'core/alta_docente.html'
+    success_url = 'listado'
+    # form_class = AltaDocenteModelForm
+    fields = '__all__'
+
+
+class DocenteListView(ListView):
+    model = Docente
+    context_object_name = 'listado_docentes'
+    template_name = 'core/docentes_listado.html'
+    ordering = ['cuit']

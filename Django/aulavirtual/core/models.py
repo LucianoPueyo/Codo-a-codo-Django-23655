@@ -7,7 +7,7 @@ class Persona(models.Model):
     nombre = models.CharField(max_length=30, verbose_name="Nombre")
     apellido = models.CharField(max_length=30, verbose_name="Apellido")
     email = models.EmailField(max_length=150, verbose_name="Email") 
-    dni = models.IntegerField(verbose_name="Dni")
+    dni = models.IntegerField(verbose_name="Dni", unique=True)
 
     def clean_dni(self):
         if not (0 < self.cleaned_data['dni'] <= 99999999):

@@ -11,4 +11,7 @@ urlpatterns = [
     re_path(r'alumnos/historico/(?P<year>[0-9]{4})/$', views.alumnos_historico, name='alumnos_historico'),
     path('alumnos/activos', views.alumnos_estado, {'estado': 'activo'}, name="alumnos_activos"),
     path('alumnos/inactivos', views.alumnos_estado, {'estado': 'inactivo'}, name="alumnos_inactivos"),
+
+    path('docentes/alta', views.DocenteCreateView.as_view(), name="alta_docente"),
+    path('docentes/listado', views.DocenteListView.as_view(), name="docentes_listado"),
 ]
