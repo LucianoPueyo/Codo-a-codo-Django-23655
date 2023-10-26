@@ -35,6 +35,8 @@ class Docente(Persona):
 class Categoria(models.Model):
     nombre = models.CharField(max_length=150, verbose_name="Nombre")
 
+    def __str__(self):
+        return self.nombre
 
 class Curso(models.Model):
     nombre = models.CharField(max_length=150, verbose_name="Nombre")
@@ -44,8 +46,14 @@ class Curso(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     estudiantes = models.ManyToManyField(Estudiante, through="Inscripcion")
 
+    def __str__(self):
+        return f"{self.nombre} {self.fecha_inicio}"
+
 
 class Inscripcion(models.Model):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     fecha = models.DateField(verbose_name="Fecha de inscripcion")
+
+    def __str__(self):
+        return f"{self.estudiante.nombre_completo()} - {self.curso} - {self.fecha}"
