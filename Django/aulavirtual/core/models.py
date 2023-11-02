@@ -26,7 +26,8 @@ class Persona(models.Model):
 
 class Estudiante(Persona):
     legajo = models.CharField(max_length=100, verbose_name="Legajo")
-
+    def __str__(self):
+        return f'{self.nombre} {self.apellido} {self.legajo}'
 
 class Docente(Persona):
     cuit = models.CharField(max_length=100, verbose_name="CUIT")

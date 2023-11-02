@@ -24,12 +24,15 @@
         <ul>
             <li><a href="{% url 'index' %}">Home</a></li>
             <li><a href="{% url 'alta_alumno' %}">Alta de alumno</a></li>
-            <li><a href="{% url 'alumnos_listado' %}">Listado alumnos</a></li>
-            <li><a href="{% url 'alumnos_historico' %}">Historico de alumnos</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'alumnos_listado' %}">Listado alumnos</a></li>
+                <li><a href="{% url 'alumnos_historico' %}">Historico de alumnos</a></li>
+            {% endif %}
 
             <li><a href="{% url 'alta_docente' %}">Alta de docente</a></li>
-            <li><a href="{% url 'docentes_listado' %}">Listado Docentes</a></li>
-
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'docentes_listado' %}">Listado Docentes</a></li>
+            {% endif %}
             <li><a href="{% url 'contacto' %}">Contactanos</a></li>
         </ul>
     </nav>

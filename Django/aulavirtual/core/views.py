@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
@@ -78,6 +80,7 @@ def alta_alumno(request):
 
     return render(request, 'core/alta_alumno.html', context)
 
+@login_required
 def alumnos_listado(request):
     listado = Estudiante.objects.all().order_by('dni')
     context = {
@@ -90,6 +93,7 @@ def alumnos_listado(request):
 
     return render(request, 'core/alumnos_listado.html', context)
 
+@login_required
 def alumno_detalle(request, nombre_alumno):
     return HttpResponse(
         f"""
@@ -97,13 +101,15 @@ def alumno_detalle(request, nombre_alumno):
         <p>Pagina Personal de usuario</p>
         """
     )
-
+@login_required
 def alumnos_historico(request, year):
     return HttpResponse(f'<h1>Historico de Alumnos del año: {year}</h1>')
 
+@login_required
 def alumnos_historico_2017(request):
     return HttpResponse('<h1>Historico de Alumnos del primer año de el Aula Virtual(2017)</h1>')
 
+@login_required
 def alumnos_estado(request, estado):
     return HttpResponse(f'Filtrar alumnos por estado: {estado}')
 
@@ -116,7 +122,7 @@ class DocenteCreateView(CreateView):
     fields = '__all__'
 
 
-class DocenteListView(ListView):
+class DocenteListView(LoginRequiredMixin, ListView):
     model = Docente
     context_object_name = 'listado_docentes'
     template_name = 'core/docentes_listado.html'
