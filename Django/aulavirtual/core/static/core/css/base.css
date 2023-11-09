@@ -1,5 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, main, footer {
+    padding: 15px;
+}
+
 header {
     background-color: gray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .title {
+    flex: 1;
+}
+
+header h2{
+ color: white;
+ font-weight: 100;
+}
+
+header .actions {
+    color: white;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+header .actions a {
+    text-decoration: none;
+    display: inline-block;
+    background-color: darkturquoise;
+    padding: 15px;
+    border-radius: 5px;
+
+    margin: 0 15px;
+
+    color: white;
+
+    transition: 0.2s all;
+}
+
+header .actions a.logout {
+    background-color: red;
+}
+
+header .actions a:hover {
+    background-color: white;
+    color: black;
+}
+
+nav {
+    background-color: rgb(200,200,200);
+    padding: 5px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    list-style-type: none;
+    padding: 5px;
+}
+
+nav ul li {
+    width: 7%;
+}
+nav ul li a {
+    text-decoration: none;
+    text-align: center;
+    padding:10px;
+    border-radius: 5px;
+    background-color: cornflowerblue;
+    color: white;
+    
+    font-size: 0.7em;
+
+    transition: 0.2s all;
+
+    display: inline-block;
+    width: 100%;
+}
+
+nav ul li a:hover {
+    background-color: white;
+    color: black;
+}
+
+main {
+    flex: 1;
 }
 
 footer {

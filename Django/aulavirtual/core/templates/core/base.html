@@ -17,8 +17,18 @@
         </ul> 
     {% endif %} 
     <header>
-        <h1>Aula Virtual 2.0</h1>
-        <h2>{% block section_title %} {% endblock %}</h2>
+        <div class="title">
+            <h1>Aula Virtual 2.0</h1>
+            <h2>{% block section_title %} {% endblock %}</h2>
+        </div>
+        <div class="actions">
+            {% if not user.is_authenticated %}
+                <a href="{% url 'login' %}">Login</a>
+            {% else %}
+                <p>Bienvenid@ <b>{{user.username}}</b></p>
+                <a class="logout" href="{% url 'logout' %}">Logout</a>
+            {% endif %}
+        </div>
     </header>
     <nav>
         <ul>
