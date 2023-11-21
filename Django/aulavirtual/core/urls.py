@@ -1,10 +1,16 @@
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from django.contrib.auth import views as auth_views
+from rest_framework.routers import DefaultRouter
+
 from . import views
+
+router = DefaultRouter()
+router.register(r'estudiantes', views.EstudianteViewSet, basename='estudiante')
 
 urlpatterns = [
     path('', views.index, name='index'),
-    
+    path('api', include(router.urls)),
+
     path('accounts/login/', auth_views.LoginView.as_view(template_name='core/login.html'),name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
 
@@ -19,4 +25,6 @@ urlpatterns = [
 
     path('docentes/alta', views.DocenteCreateView.as_view(), name="alta_docente"),
     path('docentes/listado', views.DocenteListView.as_view(), name="docentes_listado"),
+
+    path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
 ]

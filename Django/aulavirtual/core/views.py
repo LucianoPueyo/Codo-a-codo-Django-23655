@@ -11,6 +11,10 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.db import IntegrityError
 
+from rest_framework import viewsets, permissions
+from .serializers import EstudianteSerializer
+
+
 def index(request):
     context = {
         'nombre_usuario': 'Carlos Perez',
@@ -127,3 +131,7 @@ class DocenteListView(LoginRequiredMixin, ListView):
     context_object_name = 'listado_docentes'
     template_name = 'core/docentes_listado.html'
     ordering = ['cuit']
+
+class EstudianteViewSet(viewsets.ModelViewSet):
+    queryset = Estudiante.objects.all()
+    serializer_class = EstudianteSerializer
